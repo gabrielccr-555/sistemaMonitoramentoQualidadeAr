@@ -28,6 +28,10 @@ public class ZonaUrbana extends Zona implements Emergencia{
         return 0;
     }
 
+    public List<Sensor> getSensores() {
+        return sensores;
+    }
+
     @Override
     public String classificarNivelEmergencia() {
         double aqi = calcularMedia();
