@@ -1,6 +1,6 @@
 package br.espm.zona;
 
-public abstract class Zona {
+public abstract class Zona implements Comparable<Zona> {
     private String nome;
 
     public Zona(String nome) {
@@ -11,6 +11,10 @@ public abstract class Zona {
 
     public String getNome() {
         return nome;
+    }
+
+    public int compareTo(Zona z) {
+        return this.getNome().compareTo(z.getNome());
     }
 }
 

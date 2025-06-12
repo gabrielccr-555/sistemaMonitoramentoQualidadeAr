@@ -18,14 +18,16 @@ public class ZonaUrbana extends Zona implements Emergencia{
         sensores.add(sensor);
     }
 
-    public double calculartotal() {
-        // precisa ser implementado
-        return 0;
+    public double calcularTotal() {
+        double total = 0;
+        for (Sensor sensor : sensores) {
+            total += sensor.getValor();
+        }
+        return total;
     }
 
     public double calcularMedia() {
-        // precisa ser implementado
-        return 0;
+        return calcularTotal() / sensores.size();
     }
 
     public List<Sensor> getSensores() {
@@ -45,13 +47,16 @@ public class ZonaUrbana extends Zona implements Emergencia{
             return "Alerta Amarelo";
         } else if (aqi >= 201 && aqi <= 300) {
             return "Alerta Laranja";
+        } else if (aqi > 300) {
+            return "Alerta Vermelho \nAção imediata recomendada: evacuação ou restrição de atividades externas";
         }
-        return "Alerta Vermelho";
+        return "Nível de emergência desconhecido";
+        
     }
 
     @Override
     public String relatorio() {
         // Deve retornar o nome da zona, o valor total, a média semanal e o nível de alerta
-        return "a";
+        return "Zona: " + this.getNome() + "\nTotal Semanal: " + calcularTotal() + "\nMédia Semanal: " + calcularMedia() + "\nNível de emergência: " + classificarNivelEmergencia(); 
     }
 }

@@ -63,9 +63,20 @@ public class Main {
                                 if (nomeZonaRural.isEmpty()) {
                                     throw new UnsupportedOperationException("Nome da Zona Rural não pode ser vazio.");
                                 }
-                                ZonaRural zonaRural = new ZonaRural(nomeZonaRural);
-                                listaZonaRural.add(zonaRural);
-                                showMessageDialog(null, "Zona Rural '" + nomeZonaRural + "' registrada com sucesso!");
+                                boolean existeRural = false;
+                                for (ZonaRural zona : listaZonaRural) {
+                                    if (zona.getNome().trim().equalsIgnoreCase(nomeZonaRural.trim())) {
+                                        existeRural = true;
+                                        break;
+                                    }
+                                }
+                                if (existeRural) {
+                                    showMessageDialog(null, "A zona " + nomeZonaRural + " já existe!");
+                                } else {
+                                    ZonaRural zonaRural = new ZonaRural(nomeZonaRural);
+                                    listaZonaRural.add(zonaRural);
+                                    showMessageDialog(null, "Zona Rural '" + nomeZonaRural + "' registrada com sucesso!");
+                                }
                                 break;
                             case 2:
                                 // Registrar Zona Urbana
@@ -73,9 +84,20 @@ public class Main {
                                 if (nomeZonaUrbana.isEmpty()) {
                                     throw new UnsupportedOperationException("Nome da Zona Urbana não pode ser vazio.");
                                 }
-                                ZonaUrbana zonaUrbana = new ZonaUrbana(nomeZonaUrbana); 
-                                listaZonaUrbana.add(zonaUrbana);
-                                showMessageDialog(null, "Zona Urbana '" + nomeZonaUrbana + "' registrada com sucesso!");
+                                boolean existe = false;
+                                for (ZonaUrbana zona : listaZonaUrbana) {
+                                    if (zona.getNome().trim().equalsIgnoreCase(nomeZonaUrbana.trim())) {
+                                        existe = true;
+                                        break;
+                                    }
+                                }
+                                if (existe) {
+                                    showMessageDialog(null, "A zona " + nomeZonaUrbana + " já existe!");
+                                } else {
+                                    ZonaUrbana zonaUrbana = new ZonaUrbana(nomeZonaUrbana);
+                                    listaZonaUrbana.add(zonaUrbana);
+                                    showMessageDialog(null, "Zona Urbana '" + nomeZonaUrbana + "' registrada com sucesso!");
+                                }
                                 break;
                         }
                         break;
@@ -91,11 +113,11 @@ public class Main {
                             if (zona.getNome().trim().equalsIgnoreCase(nomeZona)) {
                                 zonaEncontrada = zona;
                                 break;
-                            } else {
-                                showMessageDialog(null, "Zona Urbana não encontrada.");
                             }
                         }
-                        if (zonaEncontrada != null) {
+                        if (zonaEncontrada == null) {
+                            showMessageDialog(null, "Zona Urbana não encontrada.");
+                        } else {
                             int idSensor = zonaEncontrada.getSensores().size() + 1;
                             String data = showInputDialog("Digite a data do sensor (dd/mm/yyyy):");
                             if (data.isEmpty()) {
@@ -143,9 +165,30 @@ public class Main {
                                     showMessageDialog(null, "Zona Rural não encontrada.");
                                 }
                                 break;
+                            case 2:
+                                // Imprimir relatório de Zona Urbana
+                                String nomeZonaUrbanaRelatorio = showInputDialog("Digite o nome da Zona Urbana:");
+                                if (nomeZonaUrbanaRelatorio.isEmpty()) {
+                                    throw new UnsupportedOperationException("Nome da Zona Urbana não pode estar vazio.");
+                                }
+                                ZonaUrbana zonaUrbanaRelatorio = buscarZonaUrbana(nomeZonaUrbanaRelatorio);
+                                if (zonaUrbanaRelatorio != null) {
+                                    if (zonaUrbanaRelatorio.calcularMedia() > 300) {
+                                        showMessageDialog(null, zonaUrbanaRelatorio.relatorio() + "\nALERTA EXTREMO: Média Crítica Ultrapassada!");
+                                    } else {
+                                        showMessageDialog(null, zonaUrbanaRelatorio.relatorio());
+                                    }
+                                } else {
+                                    showMessageDialog(null, "Zona Urbana não encontrada.");
+                                }
+                                break;
                         }
-
-                    
+                            break;
+                        case 4:
+                            return;
+                        default:
+                            showMessageDialog(null, "Opção inválida.");
+                            break;
                     }
 
                 } catch(Exception e) {
