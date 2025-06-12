@@ -1,4 +1,4 @@
-# Atividade IV - Sistema de Monitoramento da Qualidade do Ar  
+# Sistema de Monitoramento da Qualidade do Ar  
 Este repositório armazena a implementação de um sistema para monitoramento ambiental utilizando conceitos de orientação a objetos, como parte da disciplina **Estrutura de Dados** (ESPM - Sistemas de Informação - 3° semestre), lecionada pelo **Prof. Dr. Antonio Marcos Selmini**.
 
 ## 🌱 Contexto
